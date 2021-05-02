@@ -43,6 +43,12 @@ class _MyHomePageState extends State<MyHomePage> {
    ['493',"followers"],
    ["347","following"]
   ];
+  List images=
+  [
+    "https://media-exp1.licdn.com/dms/image/C4D03AQGu9Zrv01Szog/profile-displayphoto-shrink_200_200/0/1618172942447?e=1624492800&v=beta&t=1SSQviTZ4dFqVWXbjAga7WHSDUUWZnLT_sUNz4cn8Hc",
+    "https://avatars.githubusercontent.com/u/49269480?v=4",
+    "https://scontent.fcai20-1.fna.fbcdn.net/v/t1.6435-9/69563037_2534724436621656_8838119345918836736_n.jpg?_nc_cat=103&ccb=1-3&_nc_sid=09cbfe&_nc_eui2=AeGDqZ6Ep-039AExTAeTpzqITgtFJksd6O1OC0UmSx3o7cf441JaV1tFPvzJgnPtmXUIO8Qr8f68zfHGPWjoJ44h&_nc_ohc=QiEga7HjTcYAX-GBD-z&_nc_ht=scontent.fcai20-1.fna&oh=ad3da6e1aac2292e50f970e90fa08b4f&oe=60B5B12F"
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,12 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Container(
               child:Row(
                 children: [
-                FaIcon(
-                  FontAwesomeIcons.home,
-                  size: 20,
-                  color: Colors.black87,
-                
-                ),
+
                 SizedBox(width:10),
                  FaIcon(
                   FontAwesomeIcons.paperPlane,
@@ -131,22 +132,44 @@ class _MyHomePageState extends State<MyHomePage> {
                           flex: 65, // 65%
                           child: Container(child: 
                              ListTile(
-                                title: Text("hassan_elshazly...",
-                                style: GoogleFonts.lato(
-                                  fontSize: 20,
-                                  textStyle: Theme.of(context).textTheme.overline,
-                                  fontWeight: FontWeight.w500
-                              )),
-                                subtitle:ElevatedButton( child: Text("Edit Profile"),onPressed: null), 
-                                trailing: new Column(
-                                  children: [
-                                     FaIcon(
+                                title: Row(children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(right:23.0),
+                                    child: Text("hassan_elshazly...",
+                                      style: GoogleFonts.lato(
+                                        fontSize: 20,
+                                        textStyle: Theme.of(context).textTheme.overline,
+                                        fontWeight: FontWeight.w500
+                                    )),
+                                  ),
+                                  FaIcon(
                                       FontAwesomeIcons.cog,
                                       size: 22,
                                       color: Colors.black87,
                                     ),
-                                  ],
+                                ]),
+                                subtitle:ElevatedButton( child: Text("Edit Profile",style: TextStyle(
+                                  color:Colors.black87,
+                                  fontWeight: FontWeight.w700
+                                ),),onPressed: null,
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                                    (Set<MaterialState> states) {
+                                      if (states.contains(MaterialState.disabled))
+                                        return Colors.white12;
+                                      return null; // Defer to the widget's default.
+                                  }),
+                                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(4.0),
+                                        side: BorderSide(color: Colors.black38)
+                                      )
+                                    ) 
+                                 
                                 ),
+                                
+                                ), 
+
                               
                               )
                           ,),
@@ -213,37 +236,54 @@ class _MyHomePageState extends State<MyHomePage> {
                                     Padding(
                                         padding: const EdgeInsets.only(left:20.0),
                                         child: FaIcon(
-                                              FontAwesomeIcons.cube,
-                                              size: 30,
-                                            color: Colors.blueGrey,
+                                              FontAwesomeIcons.th,
+                                              size: 25,
+                                            color: Colors.lightBlue,
                                     ),
                                     ),
                                     Padding(
                                         padding: const EdgeInsets.only(left:12.0),
                                         child: FaIcon(
-                                              FontAwesomeIcons.cog,
-                                              size: 30,
+                                              FontAwesomeIcons.video,
+                                              size: 25,
                                             color: Colors.black38,  
                                     ),),
                                      Padding(
                                         padding: const EdgeInsets.only(left:12.0),
                                         child: FaIcon(
-                                              FontAwesomeIcons.cog,
-                                              size: 30,
+                                              FontAwesomeIcons.bookmark,
+                                              size: 25,
                                             color: Colors.black38,
                                     ),),
                                     Padding(
                                         padding: const EdgeInsets.only(right:20.0),
                                         child: FaIcon(
-                                              FontAwesomeIcons.cog,
-                                              size: 30,
+                                              FontAwesomeIcons.idBadge,
+                                              size: 25,
                                             color: Colors.black38,
                                     ),),
+                                 
                                 ],
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween ,
                                 crossAxisAlignment: CrossAxisAlignment.center ) 
                             ),
-                          )        
+                          ),
+                          Container(
+                            child:Column(children: [
+                                  Container(
+                                    child: Row(children: [
+                                      for(var item in this.images) gallery(item)
+                                      
+                                    ],),
+                                    width: MediaQuery.of(context).size.width * 1,
+                                  ),
+                                  
+                                
+                                  
+                                ],
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween ,
+                                crossAxisAlignment: CrossAxisAlignment.center ) 
+                          ),
                         ],
                       )
                       )
@@ -297,6 +337,12 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
     );
+  }
+  Widget gallery(src){
+    return   Padding(
+      padding: const EdgeInsets.only(right:11.0),
+      child:   Image(image: NetworkImage("${src}"), width: 105
+      ),);
   }
   
 }
